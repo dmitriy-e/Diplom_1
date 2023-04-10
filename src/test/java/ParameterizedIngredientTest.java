@@ -1,59 +1,50 @@
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
-import static org.junit.Assert.assertEquals;
-import static praktikum.IngredientType.*;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static praktikum.IngredientType.FILLING;
+import static praktikum.IngredientType.SAUCE;
+
 public class ParameterizedIngredientTest {
-    Ingredient ingredient;
-    private IngredientType type;
-    private String name;
-    private float price;
-
-    public ParameterizedIngredientTest(IngredientType type, String name, float price) {
-        this.type = type;
-        this.name = name;
-        this.price = price;
+    private static Stream<Arguments> ingredientDataProvider() {
+        return Stream.of(
+                Arguments.of(SAUCE, "hot sauce", 100),
+                Arguments.of(SAUCE, "chili sauce", 300),
+                Arguments.of(FILLING, "dinosaur", 200),
+                Arguments.of(FILLING, "sausage", 300)
+        );
     }
 
-    @Parameterized.Parameters
-    public static Object[][] ingredientData() {
-        return new Object[][]{
-                {SAUCE, "hot sauce", 100},
-                {SAUCE, "chili sauce", 300},
-                {FILLING, "dinosaur", 200},
-                {FILLING, "sausage", 300}
-        };
-    }
-
-    @Before
-    public void setUp() {
-        ingredient = new Ingredient(type, name, price);
-    }
-
-    @Test
-    public void getPriceSuccessfully() {
+    @ParameterizedTest
+    @MethodSource("ingredientDataProvider")
+    public void getPriceSuccessfully(IngredientType type, String name, float price) {
+        Ingredient ingredient = new Ingredient(type, name, price);
         float expected = price;
         float actual = ingredient.getPrice();
-        assertEquals("Неверная цена для ингредиента", expected, actual, 0);
+        assertEquals(expected, actual, 0, "Неверная цена для ингредиента");
     }
 
-    @Test
-    public void getNameSuccessfully() {
+    @ParameterizedTest
+    @MethodSource("ingredientDataProvider")
+    public void getNameSuccessfully(IngredientType type, String name, float price) {
+        Ingredient ingredient = new Ingredient(type, name, price);
         String expected = name;
         String actual = ingredient.getName();
-        assertEquals("Неверное название для ингредиента", expected, actual);
+        assertEquals(expected, actual, "Неверное название для ингредиента");
     }
 
-    @Test
-    public void getIngredientTypeSuccessfully() {
+    @ParameterizedTest
+    @MethodSource("ingredientDataProvider")
+    public void getIngredientTypeSuccessfully(IngredientType type, String name, float price) {
+        Ingredient ingredient = new Ingredient(type, name, price);
         IngredientType expected = type;
         IngredientType actual = ingredient.getType();
-        assertEquals("Возвращен неверный тип ингридиента", expected, actual);
+        assertEquals(expected, actual, "Возвращен неверный тип ингридиента");
     }
 }

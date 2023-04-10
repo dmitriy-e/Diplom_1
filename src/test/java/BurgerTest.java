@@ -1,18 +1,19 @@
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class BurgerTest {
     private Burger burger;
     @Mock
@@ -21,7 +22,7 @@ public class BurgerTest {
     @Mock
     Ingredient ingredient;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         burger = new Burger();
     }
@@ -29,20 +30,20 @@ public class BurgerTest {
     @Test
     public void checkSetBuns() {
         burger.setBuns(bun);
-        assertEquals("Установлено не верное название и цена булочки", bun, burger.bun);
+        assertEquals(bun, burger.bun, "Установлено не верное название и цена булочки");
     }
 
     @Test
     public void checkAddIngredient() {
         burger.addIngredient(ingredient);
-        assertEquals("Ингридиент не добавлен", 1, burger.ingredients.size());
+        assertEquals(1, burger.ingredients.size(), "Установлено не верное название и цена булочки");
     }
 
     @Test
     public void checkRemoveIngredient() {
         burger.addIngredient(ingredient);
         burger.removeIngredient(0);
-        assertTrue("Ингридиент не удалился", burger.ingredients.isEmpty());
+        assertTrue(burger.ingredients.isEmpty(), "Ингридиент не удалился");
     }
 
     @Test
@@ -52,7 +53,7 @@ public class BurgerTest {
         burger.moveIngredient(0, 1);
         String expectedNameIngredient = "hot sauce";
         String actualNameIngredient = burger.ingredients.get(0).name;
-        assertEquals("Неверное имя ингредиента", expectedNameIngredient, actualNameIngredient);
+        assertEquals(expectedNameIngredient, actualNameIngredient, "Неверное имя ингредиента");
     }
 
     @Test

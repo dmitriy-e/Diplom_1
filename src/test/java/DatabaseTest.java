@@ -1,24 +1,24 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import praktikum.Database;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DatabaseTest {
     private Database db;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         db = new Database();
     }
 
     @Test
     public void getAvailableBuns() {
-        assertFalse("Список AvailableBuns пуст", db.availableBuns().isEmpty());
+        assertFalse(db.availableBuns().isEmpty(), "Список AvailableBuns пуст");
     }
 
     @Test
     public void getAvailableIngredients() {
-        assertFalse("Список AvailableIngredients пуст", db.availableIngredients().isEmpty());
+        assertFalse(db.availableIngredients().isEmpty(), "Список AvailableIngredients пуст");
     }
 }
